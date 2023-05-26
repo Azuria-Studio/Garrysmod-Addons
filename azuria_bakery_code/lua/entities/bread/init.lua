@@ -18,12 +18,19 @@ end
 function ENT:Use(activator, caller)
     if IsValid(caller) and caller:IsPlayer() then
         caller:ChatPrint("Le pain est consommé.")
-        local HGC = AzuriaBakery.UseHungerMod 
-        if HGC == true then
-            caller:ChatPrint("Azuria Bakery : La fonctionnalité est en développement elle arrivera demainz")
-        else
-            caller:SetHealth(caller:Health() + 10)
+        local canUse, reason = hook.Call("canDarkRPUse", nil, activator, self, caller)
+        if canUse == false then
+            if reason then DarkRP.notify(caller, 1, 4, reason) end
+            return
         end
-            self:Remove() 
+
+		local currentEnergy = tonumber(caller:getDarkRPVar("Energy")) or 0
+        print(currentEnergy)
+        local newEnergy = currentEnergy + 10
+        caller:setDarkRPVar("Energy", newEnergy)
+        umsg.Start("AteFoodIcon", caller)
+        umsg.End()
+
+        self:Remove()
     end
 end

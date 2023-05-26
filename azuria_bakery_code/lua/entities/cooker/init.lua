@@ -35,7 +35,7 @@ function ENT:Think()
             self.isBaking = false
 
             local bread = ents.Create("bread")
-            bread:SetPos(self:GetPos() + Vector(0,-20,23))
+            bread:SetPos(self:GetPos() + Vector(-50,-20,25))
             bread:Spawn()
         end
     end
