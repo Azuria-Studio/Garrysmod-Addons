@@ -22,7 +22,6 @@ function ENT:StartTouch(ent)
         self.finishBakeTime = CurTime() + AzuriaBakery.CookTime
     end
 end
-
 function ENT:Think()
     if self.isBaking == true then
             self:SetColor(AzuriaBakery.CookColor)
@@ -33,9 +32,9 @@ function ENT:Think()
     if self.isBaking == true then
         if self.finishBakeTime <= CurTime() then
             self.isBaking = false
-
+			local pos = self:LocalToWorld(Vector(0,20,30))
             local bread = ents.Create("bread")
-            bread:SetPos(self:GetPos() + Vector(-50,-20,25))
+            bread:SetPos(pos)
             bread:Spawn()
         end
     end
